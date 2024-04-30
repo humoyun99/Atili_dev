@@ -23,7 +23,11 @@ public class ClothesEntity {
 
     private String size;
 
-    private String category;
+    @Column(name = "category_id")
+    private Integer categoryId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id",updatable = false,insertable = false)
+    private CategoryEntity category;
 
     // Constructors, getters, and setters
 }

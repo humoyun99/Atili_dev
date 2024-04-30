@@ -1,2 +1,11 @@
-package com.example.atili.repository;public interface CategoryRepository {
+package com.example.atili.repository;
+
+import com.example.atili.entity.CategoryEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
+
 }
+
