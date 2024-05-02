@@ -21,7 +21,5 @@ public class CategoryEntity {
     public CategoryEntity(String name) {
         this.name = name;
     }
-
-    // Getter va setterlar
 }
 

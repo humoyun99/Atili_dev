@@ -2,6 +2,7 @@ package com.example.atili.controler;
 
 import com.example.atili.entity.CardEntity;
 import com.example.atili.service.CardService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cards")
+@Slf4j
 public class CardController {
 
     @Autowired
@@ -24,6 +26,7 @@ public class CardController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CardEntity> getCardById(@PathVariable("id") Long id) {
+        log.info("Cardni Id boyicha olish {}",id);
         CardEntity card = cardService.getCardById(id);
         if (card != null) {
             return ResponseEntity.ok(card);
