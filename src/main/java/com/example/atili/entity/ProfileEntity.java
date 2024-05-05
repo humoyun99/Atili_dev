@@ -1,5 +1,7 @@
 package com.example.atili.entity;
 
+import com.example.atili.enums.ProfileRole;
+import com.example.atili.enums.ProfileStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +10,7 @@ import lombok.Setter;
 @Table(name = "profiles")
 @Getter
 @Setter
-public class Profile {
+public class ProfileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +24,7 @@ public class Profile {
 
     private String password;
 
-    private String role;
+    private ProfileRole role;
 
-    private String status;
+    private ProfileStatus status;
 }

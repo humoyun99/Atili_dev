@@ -1,6 +1,6 @@
 package com.example.atili.service;
 
-import com.example.atili.entity.Profile;
+import com.example.atili.entity.ProfileEntity;
 import com.example.atili.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,19 +13,19 @@ public class ProfileService {
     @Autowired
     private ProfileRepository profileRepository;
 
-    public List<Profile> getAllProfiles() {
+    public List<ProfileEntity> getAllProfiles() {
         return profileRepository.findAll();
     }
 
-    public Profile getProfileById(Long id) {
+    public ProfileEntity getProfileById(Long id) {
         return profileRepository.findById(id).orElse(null);
     }
 
-    public Profile createProfile(Profile profile) {
+    public ProfileEntity createProfile(ProfileEntity profile) {
         return profileRepository.save(profile);
     }
 
-    public Profile updateProfile(Long id, Profile profile) {
+    public ProfileEntity updateProfile(Long id, ProfileEntity profile) {
         if (profileRepository.existsById(id)) {
             profile.setId(id);
             return profileRepository.save(profile);

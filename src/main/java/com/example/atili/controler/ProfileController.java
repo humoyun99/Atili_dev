@@ -1,6 +1,6 @@
 package com.example.atili.controler;
 
-import com.example.atili.entity.Profile;
+import com.example.atili.entity.ProfileEntity;
 import com.example.atili.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +17,13 @@ public class ProfileController {
     private ProfileService profileService;
 
     @GetMapping("")
-    public List<Profile> getAllProfiles() {
+    public List<ProfileEntity> getAllProfiles() {
         return profileService.getAllProfiles();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Profile> getProfileById(@PathVariable("id") Long id) {
-        Profile profile = profileService.getProfileById(id);
+    public ResponseEntity<ProfileEntity> getProfileById(@PathVariable("id") Long id) {
+        ProfileEntity profile = profileService.getProfileById(id);
         if (profile != null) {
             return ResponseEntity.ok(profile);
         }
@@ -31,14 +31,14 @@ public class ProfileController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Profile> createProfile(@RequestBody Profile profile) {
-        Profile createdProfile = profileService.createProfile(profile);
+    public ResponseEntity<ProfileEntity> createProfile(@RequestBody ProfileEntity profile) {
+        ProfileEntity createdProfile = profileService.createProfile(profile);
         return new ResponseEntity<>(createdProfile, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Profile> updateProfile(@PathVariable("id") Long id, @RequestBody Profile profile) {
-        Profile updatedProfile = profileService.updateProfile(id, profile);
+    public ResponseEntity<ProfileEntity> updateProfile(@PathVariable("id") Long id, @RequestBody ProfileEntity profile) {
+        ProfileEntity updatedProfile = profileService.updateProfile(id, profile);
         if (updatedProfile != null) {
             return ResponseEntity.ok(updatedProfile);
         }

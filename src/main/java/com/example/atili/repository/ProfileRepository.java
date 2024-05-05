@@ -1,9 +1,12 @@
 package com.example.atili.repository;
 
-import com.example.atili.entity.Profile;
+import com.example.atili.entity.ProfileEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ProfileRepository extends JpaRepository<Profile, Long> {
+import java.util.Optional;
 
-    // Profilega maxsus boshqa metodlar kerak bo'lsa, ularni bu interfacega qo'shishingiz mumkin
+@Repository
+public interface ProfileRepository extends JpaRepository<ProfileEntity,Long> {
+    Optional<ProfileEntity> findByEmail(String email);
 }
