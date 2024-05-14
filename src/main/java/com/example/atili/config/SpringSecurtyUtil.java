@@ -7,27 +7,40 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SpringSecurtyUtil {
     @Autowired
     private CustomeUserDetailsService customeUserDetailsService;
+    @Autowired
+    private JwtTokenFilter jwtTokenFilter;
     @Bean
     public AuthenticationProvider authenticationProvider() {
         // authentication (login,password)
         final DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(customeUserDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passworEncoder());
-        return null;
+        return daoAuthenticationProvider;
     }
+    public static String [] AUTH_WHITELIST = {
+            "/v2/api-docs",
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/swagger-resources/configuration/ui",
+            "/swagger-resources/configuration/security",
+            "/swagger-ui.html/**",
+
+    };
 
     private PasswordEncoder passworEncoder() {
         return new PasswordEncoder() {
@@ -47,14 +60,9 @@ public class SpringSecurtyUtil {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // authorization (ROLE)
         http.authorizeHttpRequests((c) ->
-                c.requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/news/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/region/lang").permitAll()
-                        .requestMatchers("/api/v1/attach/**").permitAll()
-                        .requestMatchers("/api/v1/attach/admin/**").hasAnyRole("ADMIN", "MODERATOR")
-                        .requestMatchers("/api/v1/region/admin", "/api/v1/region/admin/**").hasRole("ADMIN")
+                c.requestMatchers(AUTH_WHITELIST).permitAll()
                         .anyRequest().authenticated()
-        ).httpBasic(Customizer.withDefaults());
+        ).addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable);
         return http.build();
     }

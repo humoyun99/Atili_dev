@@ -3,6 +3,7 @@ package com.example.atili.controler;
 import com.example.atili.entity.CategoryEntity;
 import com.example.atili.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -23,10 +24,9 @@ public class CategoryController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('Admin','moderator')")
     public CategoryEntity createCategory(@RequestBody CategoryEntity category) {
         return categoryService.createCategory(category);
     }
-
-    // Boshqa endpointlar...
 }
 

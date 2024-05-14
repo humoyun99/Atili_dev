@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import static jakarta.persistence.GenerationType.SEQUENCE;
 
 
 @Entity
@@ -12,8 +13,14 @@ import lombok.Setter;
 @Setter
 public class ClothesEntity {
 
+    @SequenceGenerator(
+            name = "clothes_sequence",
+            sequenceName = "clothes_sequence",
+            allocationSize = 1
+    )
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = SEQUENCE,
+            generator = "clothes_sequence" )
     private Long id;
 
     private String description;
