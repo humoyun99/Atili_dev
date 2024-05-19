@@ -5,6 +5,7 @@ import com.example.atili.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,7 +15,9 @@ public class ProfileService {
     private ProfileRepository profileRepository;
 
     public List<ProfileEntity> getAllProfiles() {
-        return profileRepository.findAll();
+        List<ProfileEntity> list = new ArrayList<>();
+        profileRepository.findAll().forEach(list::add);
+        return list;
     }
 
     public ProfileEntity getProfileById(Long id) {

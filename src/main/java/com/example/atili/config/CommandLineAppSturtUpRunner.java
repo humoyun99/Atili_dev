@@ -9,5 +9,6 @@ public class CommandLineAppSturtUpRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Flyway.configure().baselineOnMigrate(true).dataSource("jdbc:postgresql://localhost:5432/atili_db", "postgres", "root").load().migrate();
+//        Flyway.configure().load().repair();
     }
 }

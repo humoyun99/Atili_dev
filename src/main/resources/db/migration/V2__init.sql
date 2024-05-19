@@ -1,0 +1,2 @@
+insert into profile(id,name,surname,email,password,status,role,created_date,visible)
+values (1,'Humoyiddin','Baxranov','baxranovHumoyiddin99@gmail.com','827ccb0eea8a706c4c34a16891f84e7b','ACTIVE','ROLE_ADMIN',now(),true) on conflict (id) do nothing;

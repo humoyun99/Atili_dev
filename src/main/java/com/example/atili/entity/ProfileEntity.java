@@ -33,8 +33,10 @@ public class ProfileEntity {
     private String email;
     @Column
     private String password;
+    @Enumerated(EnumType.STRING)
     @Column
     private ProfileStatus status;
+    @Enumerated(EnumType.STRING)
     @Column
     private ProfileRole role;
     @CreationTimestamp
